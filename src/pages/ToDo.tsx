@@ -5,9 +5,9 @@ import todoItemType from "../types/todoItem";
 
 const Todo = () => {
   const [todoInput, setTodoInput] = useState("");
-  const [todoItem, setTodoItem] = useState<todoItemType[]>([]);
+  const [todoItems, setTodoItems] = useState<todoItemType[]>([]);
 
-  const getTodo = async () => {
+  const getTodos = async () => {
     try {
       const response = await fetch(`${API_BASE_URL}/todos`, {
         method: "GET",
@@ -20,7 +20,7 @@ const Todo = () => {
         alert("내용을 입력해주세요.");
       }
       if (response.status === 200) {
-        setTodoItem(data);
+        setTodoItems(data);
       }
     } catch (err) {
       console.error(err);
@@ -52,7 +52,7 @@ const Todo = () => {
         alert("내용을 입력해주세요.");
       }
       if (response.status === 201) {
-        setTodoItem((prev) => [data, ...prev]);
+        setTodoItems((prev) => [...prev, data]);
         setTodoInput("");
       }
     } catch (err) {
@@ -61,7 +61,7 @@ const Todo = () => {
   };
 
   useEffect(() => {
-    getTodo();
+    getTodos();
   }, []);
 
   return (
@@ -80,18 +80,20 @@ const Todo = () => {
           </button>
         </TodoForm>
         <TodoList>
-          {todoItem.map((item) => (
-            <li key={item.id}>
-              <label>
-                <input type="checkbox" defaultChecked={item.isCompleted} />
-                <span>{item.todo}</span>
-              </label>
-              <div>
-                <button data-testid="modify-button">수정</button>
-                <button data-testid="delete-button">삭제</button>
-              </div>
-            </li>
-          ))}
+          {todoItems
+            .map((item) => (
+              <li key={item.id}>
+                <label>
+                  <input type="checkbox" defaultChecked={item.isCompleted} />
+                  <span>{item.todo}</span>
+                </label>
+                <div>
+                  <button data-testid="modify-button">수정</button>
+                  <button data-testid="delete-button">삭제</button>
+                </div>
+              </li>
+            ))
+            .reverse()}
         </TodoList>
       </TodoContainer>
     </>
