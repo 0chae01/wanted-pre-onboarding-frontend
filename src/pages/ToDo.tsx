@@ -60,6 +60,22 @@ const Todo = () => {
     }
   };
 
+  const deleteTodo = async (id: number) => {
+    try {
+      const response = await fetch(`${API_BASE_URL}/todos/${id}`, {
+        method: "DELETE",
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      });
+      if (response.status === 204) {
+        setTodoItems(todoItems.filter((item) => item.id !== id));
+      }
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
   useEffect(() => {
     getTodos();
   }, []);
@@ -89,7 +105,12 @@ const Todo = () => {
                 </label>
                 <div>
                   <button data-testid="modify-button">수정</button>
-                  <button data-testid="delete-button">삭제</button>
+                  <button
+                    data-testid="delete-button"
+                    onClick={() => deleteTodo(item.id)}
+                  >
+                    삭제
+                  </button>
                 </div>
               </li>
             ))
@@ -166,5 +187,6 @@ const TodoList = styled.ul`
   button {
     font-size: 20px;
     margin: 0 4px;
+    cursor: pointer;
   }
 `;
