@@ -45,7 +45,7 @@ const SignIn = () => {
       if (response.status === 200) {
         localStorage.setItem("token", data.access_token);
         alert("환영합니다!");
-        navigate("/");
+        navigate("/todo");
       }
     } catch (err) {
       console.error(err);
