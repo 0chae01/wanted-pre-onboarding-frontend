@@ -1,10 +1,11 @@
 import React, { useState } from "react";
 import styled, { css } from "styled-components";
-import API_BASE_URL from "../constants/path";
 import { useNavigate } from "react-router-dom";
+import API_BASE_URL from "../constants/path";
 
 const SignUp = () => {
   const navigate = useNavigate();
+
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [isEmailValid, setIsEmailValid] = useState(true);
@@ -42,7 +43,7 @@ const SignUp = () => {
         alert(data.message);
       }
       if (response.status === 201) {
-        alert("환영합니다!");
+        alert(`회원가입이 완료되었습니다. 로그인 해주세요.`);
         navigate("/signin");
       }
     } catch (err) {
@@ -51,7 +52,7 @@ const SignUp = () => {
   };
 
   return (
-    <SignUpPage>
+    <>
       <Title>회원가입</Title>
       <SignUpForm onSubmit={handleSubmit}>
         <InputContainer>
@@ -88,13 +89,11 @@ const SignUp = () => {
           가입하기
         </SubmitButton>
       </SignUpForm>
-    </SignUpPage>
+    </>
   );
 };
 
 export default SignUp;
-
-const SignUpPage = styled.div``;
 
 const Title = styled.h1`
   text-align: center;
