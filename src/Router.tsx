@@ -3,7 +3,7 @@ import App from "./App";
 import Main from "./pages/Main";
 import SignUp from "./pages/SignUp";
 import SignIn from "./pages/SignIn";
-import ToDo from "./pages/ToDo";
+import Todo from "./pages/Todo";
 
 const router = createBrowserRouter([
   {
@@ -24,7 +24,7 @@ const router = createBrowserRouter([
       },
       {
         path: "/todo",
-        element: <ToDo />,
+        element: <Todo />,
       },
     ],
   },
