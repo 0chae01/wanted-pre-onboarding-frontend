@@ -1,8 +1,10 @@
 import React, { useState } from "react";
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 import API_BASE_URL from "../constants/path";
+import { useNavigate } from "react-router-dom";
 
 const SignUp = () => {
+  const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [isEmailValid, setIsEmailValid] = useState(true);
@@ -10,19 +12,18 @@ const SignUp = () => {
 
   const handleEmailInput = (e: React.ChangeEvent<HTMLInputElement>) => {
     const emailValue = e.target.value;
-    setIsEmailValid(!emailValue && emailValue.includes("@"));
+    setIsEmailValid(emailValue.length === 0 || emailValue.includes("@"));
     setEmail(e.target.value);
   };
 
   const handlePasswordInput = (e: React.ChangeEvent<HTMLInputElement>) => {
     const passwordValue = e.target.value;
-    setIsPasswordValid(!passwordValue || passwordValue.length >= 8);
+    setIsPasswordValid(passwordValue.length === 0 || passwordValue.length >= 8);
     setPassword(e.target.value);
   };
 
   const checkEveryInput = () => {
-    console.log(!!email && !!password && !isEmailValid);
-    return !!email && !!password && isEmailValid && isPasswordValid && false;
+    return !!email && !!password && isEmailValid && isPasswordValid;
   };
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -36,8 +37,14 @@ const SignUp = () => {
           password: password,
         }),
       });
-      const data = await response.json();
-      console.log(data);
+      if (response.status === 400) {
+        const data = await response.json();
+        alert(data.message);
+      }
+      if (response.status === 201) {
+        alert("환영합니다!");
+        navigate("/signin");
+      }
     } catch (err) {
       console.error(err);
     }
@@ -50,6 +57,7 @@ const SignUp = () => {
         <InputContainer>
           <label>이메일</label>
           <input
+            type="email"
             data-testid="email-input"
             onChange={handleEmailInput}
             value={email}
@@ -62,6 +70,7 @@ const SignUp = () => {
         <InputContainer>
           <label>비밀번호</label>
           <input
+            type="password"
             data-testid="password-input"
             onChange={handlePasswordInput}
             value={password}
@@ -74,7 +83,7 @@ const SignUp = () => {
         <SubmitButton
           data-testid="signup-button"
           type="submit"
-          disabled={checkEveryInput()}
+          disabled={!checkEveryInput()}
         >
           가입하기
         </SubmitButton>
@@ -135,6 +144,14 @@ const SubmitButton = styled.button`
   color: #ffffff;
   background-color: #36f;
   cursor: pointer;
+
+  ${(props) =>
+    props.disabled &&
+    css`
+      background-color: #f2f4f7;
+      cursor: default;
+      color: #ccc;
+    `}
 `;
 
 const ErrorMessage = styled.p`
