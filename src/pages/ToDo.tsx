@@ -18,9 +18,6 @@ const Todo = () => {
         },
       });
       const data = await response.json();
-      if (response.status === 400) {
-        alert("내용을 입력해주세요.");
-      }
       if (response.status === 200) {
         setTodoItems(data);
       }
