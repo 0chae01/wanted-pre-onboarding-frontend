@@ -93,6 +93,25 @@ const Todo = () => {
     }
   };
 
+  const updateCheckbox = async (id: number) => {
+    const targetItem = todoItems.find((item) => item.id === id);
+    try {
+      const response = await fetch(`${API_BASE_URL}/todos/${id}`, {
+        method: "PUT",
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+          "Content-type": "application/json",
+        },
+        body: JSON.stringify({
+          todo: targetItem?.todo,
+          isCompleted: !targetItem?.isCompleted,
+        }),
+      });
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
   const deleteTodo = async (id: number) => {
     try {
       const response = await fetch(`${API_BASE_URL}/todos/${id}`, {
@@ -142,6 +161,7 @@ const Todo = () => {
                       <input
                         type="checkbox"
                         defaultChecked={item.isCompleted}
+                        onChange={() => updateCheckbox(item.id)}
                       />
                       <ModifyInput
                         type="text"
@@ -169,6 +189,7 @@ const Todo = () => {
                       <input
                         type="checkbox"
                         defaultChecked={item.isCompleted}
+                        onChange={() => updateCheckbox(item.id)}
                       />
                       <span>{item.todo}</span>
                     </label>
