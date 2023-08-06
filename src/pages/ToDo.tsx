@@ -99,7 +99,7 @@ const Todo = () => {
   const updateCheckbox = async (id: number) => {
     const targetItem = todoItems.find((item) => item.id === id);
     try {
-      await fetch(`${API_BASE_URL}/todos/${id}`, {
+      const response = await fetch(`${API_BASE_URL}/todos/${id}`, {
         method: "PUT",
         headers: {
           Authorization: `Bearer ${localStorage.getItem("token")}`,
@@ -110,6 +110,9 @@ const Todo = () => {
           isCompleted: !targetItem?.isCompleted,
         }),
       });
+      if (response.status === 200) {
+        getTodos();
+      }
     } catch (err) {
       console.error(err);
     }
@@ -167,6 +170,7 @@ const Todo = () => {
                         onChange={() => updateCheckbox(item.id)}
                       />
                       <ModifyInput
+                        data-testid="modify-input"
                         type="text"
                         maxLength={20}
                         width={"100%"}
@@ -176,8 +180,11 @@ const Todo = () => {
                       />
                     </label>
                     <div>
-                      <button type="submit">완료</button>
+                      <button type="submit" data-testid="modify-input">
+                        제출
+                      </button>
                       <button
+                        data-testid="cancel-button"
                         onClick={() => {
                           setModifyingItem(-1);
                         }}
@@ -187,7 +194,7 @@ const Todo = () => {
                     </div>
                   </ModifyForm>
                 ) : (
-                  <TodoItem>
+                  <TodoItem className={String(item.isCompleted)}>
                     <label>
                       <Checkbox
                         type="checkbox"
@@ -276,9 +283,6 @@ const TodoList = styled.ul`
     cursor: pointer;
   }
 
-  span {
-    margin: 0 10px;
-  }
   button {
     font-size: 20px;
     margin: 0 4px;
@@ -293,10 +297,17 @@ const Checkbox = styled.input`
 `;
 
 const TodoItem = styled.div`
-  margin: 4px 0;
+  margin: 10px 0;
   display: flex;
   justify-content: space-between;
   align-items: center;
+
+  span {
+    padding: 4px;
+    margin: 0 10px;
+    text-decoration: ${(props) =>
+      props.className === "true" ? "line-through" : "none"};
+  }
 `;
 
 const ModifyForm = styled.form`
@@ -323,6 +334,6 @@ const ModifyInput = styled.input`
   color: #888888;
   flex: 1;
   padding: 4px;
-  margin: 0 10px;
+  margin: 0 8px;
   cursor: revert;
 `;
