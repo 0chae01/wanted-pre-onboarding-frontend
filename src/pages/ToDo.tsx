@@ -88,6 +88,9 @@ const Todo = () => {
         setModifyInput("");
         setModifyingItem(-1);
       }
+      if (response.status === 400) {
+        alert("내용을 입력해주세요.");
+      }
     } catch (err) {
       console.error(err);
     }
@@ -96,7 +99,7 @@ const Todo = () => {
   const updateCheckbox = async (id: number) => {
     const targetItem = todoItems.find((item) => item.id === id);
     try {
-      const response = await fetch(`${API_BASE_URL}/todos/${id}`, {
+      await fetch(`${API_BASE_URL}/todos/${id}`, {
         method: "PUT",
         headers: {
           Authorization: `Bearer ${localStorage.getItem("token")}`,
