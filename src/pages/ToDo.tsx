@@ -197,8 +197,12 @@ const Todo = () => {
                       <button
                         data-testid="modify-button"
                         onClick={() => {
-                          setModifyingItem(item.id);
-                          setModifyInput(item.todo);
+                          if (modifyingItem === -1) {
+                            setModifyingItem(item.id);
+                            setModifyInput(item.todo);
+                          } else {
+                            alert("todo 수정을 완료해주세요.");
+                          }
                         }}
                       >
                         수정
