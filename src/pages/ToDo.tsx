@@ -158,7 +158,7 @@ const Todo = () => {
                     }
                   >
                     <label>
-                      <input
+                      <Checkbox
                         type="checkbox"
                         defaultChecked={item.isCompleted}
                         onChange={() => updateCheckbox(item.id)}
@@ -186,7 +186,7 @@ const Todo = () => {
                 ) : (
                   <TodoItem>
                     <label>
-                      <input
+                      <Checkbox
                         type="checkbox"
                         defaultChecked={item.isCompleted}
                         onChange={() => updateCheckbox(item.id)}
@@ -271,12 +271,6 @@ const TodoList = styled.ul`
     align-items: center;
     flex: 1;
     cursor: pointer;
-
-    input {
-      width: 20px;
-      height: 20px;
-      cursor: pointer;
-    }
   }
 
   span {
@@ -288,6 +282,13 @@ const TodoList = styled.ul`
     cursor: pointer;
   }
 `;
+
+const Checkbox = styled.input`
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+`;
+
 const TodoItem = styled.div`
   margin: 4px 0;
   display: flex;
@@ -320,4 +321,5 @@ const ModifyInput = styled.input`
   flex: 1;
   padding: 4px;
   margin: 0 10px;
+  cursor: revert;
 `;
