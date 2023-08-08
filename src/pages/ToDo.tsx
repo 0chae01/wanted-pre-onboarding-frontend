@@ -180,7 +180,7 @@ const Todo = () => {
                       />
                     </label>
                     <div>
-                      <button type="submit" data-testid="modify-input">
+                      <button type="submit" data-testid="submit-button">
                         제출
                       </button>
                       <button
