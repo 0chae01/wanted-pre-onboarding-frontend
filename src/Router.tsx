@@ -4,6 +4,8 @@ import Main from "./pages/Main";
 import SignUp from "./pages/SignUp";
 import SignIn from "./pages/SignIn";
 import Todo from "./pages/Todo";
+import PrivateRoute from "./routes/PrivateRoute";
+import PublicRoute from "./routes/PublicRoute";
 
 const router = createBrowserRouter([
   {
@@ -16,15 +18,27 @@ const router = createBrowserRouter([
       },
       {
         path: "/signup",
-        element: <SignUp />,
+        element: (
+          <PrivateRoute>
+            <SignUp />
+          </PrivateRoute>
+        ),
       },
       {
         path: "/signin",
-        element: <SignIn />,
+        element: (
+          <PrivateRoute>
+            <SignIn />
+          </PrivateRoute>
+        ),
       },
       {
         path: "/todo",
-        element: <Todo />,
+        element: (
+          <PublicRoute>
+            <Todo />
+          </PublicRoute>
+        ),
       },
     ],
   },

@@ -1,9 +1,12 @@
 import React, { useEffect, useState } from "react";
+import { Navigate } from "react-router-dom";
 import styled from "styled-components";
 import API_BASE_URL from "../constants/path";
 import todoItemType from "../types/todoItem";
 
 const Todo = () => {
+  const user = localStorage.getItem("token");
+
   const [todoInput, setTodoInput] = useState("");
   const [todoItems, setTodoItems] = useState<todoItemType[]>([]);
   const [modifyingItem, setModifyingItem] = useState(-1);
@@ -140,6 +143,7 @@ const Todo = () => {
 
   return (
     <>
+      {!user && <Navigate to="/signin" replace={true} />}
       <Title>To Do List</Title>
       <TodoContainer>
         <TodoForm onSubmit={createTodo}>

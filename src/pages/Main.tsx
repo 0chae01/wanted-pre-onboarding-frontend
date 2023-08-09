@@ -1,5 +1,7 @@
+import { Navigate } from "react-router-dom";
+
 const Main = () => {
-  return <div>Main</div>;
+  return <Navigate to="/todo" replace />;
 };
 
 export default Main;
