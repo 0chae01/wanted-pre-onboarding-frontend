@@ -6,6 +6,7 @@ import SignIn from "./pages/SignIn";
 import Todo from "./pages/Todo";
 import PrivateRoute from "./routes/PrivateRoute";
 import PublicRoute from "./routes/PublicRoute";
+import NotFound from "./pages/NotFound";
 
 const router = createBrowserRouter([
   {
@@ -41,6 +42,7 @@ const router = createBrowserRouter([
         ),
       },
     ],
+    errorElement: <NotFound />,
   },
 ]);
 
