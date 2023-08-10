@@ -4,9 +4,9 @@ import Main from "./pages/Main";
 import SignUp from "./pages/SignUp";
 import SignIn from "./pages/SignIn";
 import Todo from "./pages/Todo";
+import NotFound from "./pages/NotFound";
 import PrivateRoute from "./routes/PrivateRoute";
 import PublicRoute from "./routes/PublicRoute";
-import NotFound from "./pages/NotFound";
 
 const router = createBrowserRouter([
   {

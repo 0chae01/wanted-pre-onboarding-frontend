@@ -184,17 +184,17 @@ const Todo = () => {
                       />
                     </label>
                     <div>
-                      <button type="submit" data-testid="submit-button">
+                      <SubmitButton type="submit" data-testid="submit-button">
                         제출
-                      </button>
-                      <button
+                      </SubmitButton>
+                      <CancelButton
                         data-testid="cancel-button"
                         onClick={() => {
                           setModifyingItem(-1);
                         }}
                       >
                         취소
-                      </button>
+                      </CancelButton>
                     </div>
                   </ModifyForm>
                 ) : (
@@ -208,7 +208,7 @@ const Todo = () => {
                       <span>{item.todo}</span>
                     </label>
                     <div>
-                      <button
+                      <ModifyButton
                         data-testid="modify-button"
                         onClick={() => {
                           if (modifyingItem === -1) {
@@ -220,13 +220,13 @@ const Todo = () => {
                         }}
                       >
                         수정
-                      </button>
-                      <button
+                      </ModifyButton>
+                      <DeleteButton
                         data-testid="delete-button"
                         onClick={() => deleteTodo(item.id)}
                       >
                         삭제
-                      </button>
+                      </DeleteButton>
                     </div>
                   </TodoItem>
                 )}
@@ -288,10 +288,25 @@ const TodoList = styled.ul`
   }
 
   button {
-    font-size: 20px;
+    font-size: 18px;
+    font-weight: 600;
+    width: 50px;
+    padding: 4px 8px;
     margin: 0 4px;
     cursor: pointer;
+    border-radius: 100px;
+    border: 1px solid;
   }
+`;
+
+const ModifyButton = styled.button`
+  color: #36f;
+  background-color: #ffffff;
+  border-color: #36f;
+`;
+
+const DeleteButton = styled.button`
+  color: gray;
 `;
 
 const Checkbox = styled.input`
@@ -326,11 +341,16 @@ const ModifyForm = styled.form`
     flex: 1;
     cursor: pointer;
   }
-  button {
-    font-size: 20px;
-    margin: 0 4px;
-    cursor: pointer;
-  }
+`;
+const SubmitButton = styled.button`
+  color: #36f;
+  background-color: #ffffff;
+  border-color: #36f;
+  font-size: 18px;
+`;
+
+const CancelButton = styled.button`
+  color: gray;
 `;
 
 const ModifyInput = styled.input`

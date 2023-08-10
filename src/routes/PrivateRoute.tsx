@@ -5,7 +5,6 @@ const PrivateRoute = ({ children }: { children: JSX.Element }) => {
   if (user) {
     return <Navigate to="/todo" replace />;
   }
-
   return children;
 };
 
