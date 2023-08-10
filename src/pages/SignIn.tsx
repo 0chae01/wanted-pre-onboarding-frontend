@@ -39,8 +39,8 @@ const SignIn = () => {
         }),
       });
       const data = await response.json();
-      if (response.status === 404) {
-        alert(data.message);
+      if (response.status === 401) {
+        alert("이메일 또는 비밀번호가 일치하지 않습니다.");
       }
       if (response.status === 200) {
         localStorage.setItem("token", data.access_token);
