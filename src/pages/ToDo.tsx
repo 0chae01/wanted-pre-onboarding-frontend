@@ -223,7 +223,15 @@ const Todo = () => {
                       </ModifyButton>
                       <DeleteButton
                         data-testid="delete-button"
-                        onClick={() => deleteTodo(item.id)}
+                        onClick={() => {
+                          if (
+                            window.confirm(
+                              `'${item.todo}' 항목을 삭제하시겠습니까?`
+                            )
+                          ) {
+                            deleteTodo(item.id);
+                          }
+                        }}
                       >
                         삭제
                       </DeleteButton>
