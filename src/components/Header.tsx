@@ -41,8 +41,10 @@ export default Header;
 const Container = styled.div`
   background-color: #ffffff;
   width: 100%;
+  max-width: 480px;
   height: 70px;
   padding: 0 20px;
+  margin: 0 auto;
   box-sizing: border-box;
   border-bottom: 1px solid #e1e2e3;
   display: flex;
