@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import styled, { css } from "styled-components";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import API_BASE_URL from "../constants/path";
 
 const SignIn = () => {
@@ -53,7 +53,7 @@ const SignIn = () => {
   };
 
   return (
-    <>
+    <Container>
       <Title>로그인</Title>
       <SignInForm onSubmit={handleSubmit}>
         <InputContainer>
@@ -90,11 +90,20 @@ const SignIn = () => {
           로그인
         </SubmitButton>
       </SignInForm>
-    </>
+      <SignUpButtonArea>
+        <p>아직 회원이 아니신가요?</p>
+        <Link to="/signup">회원가입</Link>
+      </SignUpButtonArea>
+    </Container>
   );
 };
 
 export default SignIn;
+
+const Container = styled.div`
+  width: 300px;
+  margin: 0 auto;
+`;
 
 const Title = styled.h1`
   text-align: center;
@@ -158,4 +167,15 @@ const ErrorMessage = styled.p`
   font-size: 12px;
   color: red;
   margin: 4px 0;
+`;
+
+const SignUpButtonArea = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+
+  a {
+    color: #36f;
+  }
 `;
