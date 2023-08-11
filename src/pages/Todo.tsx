@@ -5,12 +5,12 @@ import API_BASE_URL from "../constants/path";
 import todoItemType from "../types/todoItem";
 
 const Todo = () => {
-  const user = localStorage.getItem("token");
-
   const [todoInput, setTodoInput] = useState("");
   const [todoItems, setTodoItems] = useState<todoItemType[]>([]);
   const [modifyingItem, setModifyingItem] = useState(-1);
   const [modifyInput, setModifyInput] = useState("");
+
+  const user = localStorage.getItem("token");
 
   const getTodos = async () => {
     try {
