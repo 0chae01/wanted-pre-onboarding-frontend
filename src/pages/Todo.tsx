@@ -30,8 +30,8 @@ const Todo = () => {
   };
 
   const handleTodoInput = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (e.target.value.length >= 20) {
-      alert("최대 20자까지 입력할 수 있습니다.");
+    if (e.target.value.length >= 10) {
+      alert("최대 10자까지 입력할 수 있습니다.");
     }
     setTodoInput(e.target.value);
   };
@@ -63,8 +63,8 @@ const Todo = () => {
   };
 
   const handleModifyInput = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (e.target.value.length >= 20) {
-      alert("최대 20자까지 입력할 수 있습니다.");
+    if (e.target.value.length >= 10) {
+      alert("최대 10자까지 입력할 수 있습니다.");
     }
     setModifyInput(e.target.value);
   };
@@ -151,13 +151,23 @@ const Todo = () => {
             data-testid="new-todo-input"
             onChange={handleTodoInput}
             value={todoInput}
-            maxLength={20}
+            maxLength={10}
           />
           <button data-testid="new-todo-add-button" type="submit">
             추가
           </button>
         </TodoForm>
         <TodoList>
+          {todoItems.length === 0 && (
+            <Empty>
+              <BreakImage
+                src={"/images/coffeebreak.png"}
+                alt="breaktime"
+                width="150px"
+              />
+              <EmptyMessage>아직 할 일이 없습니다!</EmptyMessage>
+            </Empty>
+          )}
           {todoItems
             .map((item) => (
               <li key={item.id}>
@@ -176,7 +186,7 @@ const Todo = () => {
                       <ModifyInput
                         data-testid="modify-input"
                         type="text"
-                        maxLength={20}
+                        maxLength={10}
                         width={"100%"}
                         defaultValue={item.todo}
                         name="modifyInput"
@@ -256,6 +266,25 @@ const Title = styled.h1`
 const TodoContainer = styled.div`
   width: 400px;
   margin: auto;
+`;
+
+const Empty = styled.div`
+  box-sizing: border-box;
+  margin: 100px 0;
+`;
+
+const BreakImage = styled.img`
+  opacity: 0.1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0 auto;
+`;
+
+const EmptyMessage = styled.p`
+  color: lightgray;
+  font-weight: 800;
+  text-align: center;
 `;
 
 const TodoForm = styled.form`
