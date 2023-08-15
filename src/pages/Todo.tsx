@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { Navigate } from "react-router-dom";
-import styled from "styled-components";
 import todoItemType from "../types/todoItem";
 import { createTodo, getTodos, updateTodo, deleteTodo } from "../apis/todo";
+import * as S from "../styles/Todo.styled";
 
 const Todo = () => {
   const [todoInput, setTodoInput] = useState("");
@@ -60,7 +60,6 @@ const Todo = () => {
     isCompleted: boolean
   ) => {
     e.preventDefault();
-
     try {
       const result = await updateTodo(id, todo, isCompleted);
       if (result.status === 200) {
@@ -108,9 +107,9 @@ const Todo = () => {
   return (
     <>
       {!user && <Navigate to="/signin" replace={true} />}
-      <Title>To Do List</Title>
-      <TodoContainer>
-        <TodoForm onSubmit={handleCreateTodo}>
+      <S.Title>To Do List</S.Title>
+      <S.TodoContainer>
+        <S.TodoForm onSubmit={handleCreateTodo}>
           <input
             data-testid="new-todo-input"
             onChange={handleTodoInput}
@@ -120,23 +119,23 @@ const Todo = () => {
           <button data-testid="new-todo-add-button" type="submit">
             추가
           </button>
-        </TodoForm>
-        <TodoList>
+        </S.TodoForm>
+        <S.TodoList>
           {todoItems.length === 0 && (
-            <Empty>
-              <BreakImage
+            <S.Empty>
+              <S.BreakImage
                 src={"/images/coffeebreak.png"}
                 alt="breaktime"
                 width="150px"
               />
-              <EmptyMessage>아직 할 일이 없습니다!</EmptyMessage>
-            </Empty>
+              <S.EmptyMessage>아직 할 일이 없습니다!</S.EmptyMessage>
+            </S.Empty>
           )}
           {todoItems
             .map((item) => (
               <li key={item.id}>
                 {modifyingItem === item.id ? (
-                  <ModifyForm
+                  <S.ModifyForm
                     onSubmit={(e: React.FormEvent<HTMLFormElement>) =>
                       handleUpdateValue(
                         e,
@@ -147,7 +146,7 @@ const Todo = () => {
                     }
                   >
                     <label>
-                      <Checkbox
+                      <S.Checkbox
                         type="checkbox"
                         defaultChecked={item.isCompleted}
                         onChange={() =>
@@ -158,7 +157,7 @@ const Todo = () => {
                           )
                         }
                       />
-                      <ModifyInput
+                      <S.ModifyInput
                         data-testid="modify-input"
                         type="text"
                         maxLength={10}
@@ -169,23 +168,23 @@ const Todo = () => {
                       />
                     </label>
                     <div>
-                      <SubmitButton type="submit" data-testid="submit-button">
+                      <S.SubmitButton type="submit" data-testid="submit-button">
                         제출
-                      </SubmitButton>
-                      <CancelButton
+                      </S.SubmitButton>
+                      <S.CancelButton
                         data-testid="cancel-button"
                         onClick={() => {
                           setModifyingItem(-1);
                         }}
                       >
                         취소
-                      </CancelButton>
+                      </S.CancelButton>
                     </div>
-                  </ModifyForm>
+                  </S.ModifyForm>
                 ) : (
-                  <TodoItem className={String(item.isCompleted)}>
+                  <S.TodoItem className={String(item.isCompleted)}>
                     <label>
-                      <Checkbox
+                      <S.Checkbox
                         type="checkbox"
                         defaultChecked={item.isCompleted}
                         onChange={() =>
@@ -199,7 +198,7 @@ const Todo = () => {
                       <span>{item.todo}</span>
                     </label>
                     <div>
-                      <ModifyButton
+                      <S.ModifyButton
                         data-testid="modify-button"
                         onClick={() => {
                           if (modifyingItem === -1) {
@@ -211,8 +210,8 @@ const Todo = () => {
                         }}
                       >
                         수정
-                      </ModifyButton>
-                      <DeleteButton
+                      </S.ModifyButton>
+                      <S.DeleteButton
                         data-testid="delete-button"
                         onClick={() => {
                           if (
@@ -225,157 +224,17 @@ const Todo = () => {
                         }}
                       >
                         삭제
-                      </DeleteButton>
+                      </S.DeleteButton>
                     </div>
-                  </TodoItem>
+                  </S.TodoItem>
                 )}
               </li>
             ))
             .reverse()}
-        </TodoList>
-      </TodoContainer>
+        </S.TodoList>
+      </S.TodoContainer>
     </>
   );
 };
 
 export default Todo;
-
-const Title = styled.h1`
-  text-align: center;
-`;
-
-const TodoContainer = styled.div`
-  width: 400px;
-  margin: auto;
-`;
-
-const Empty = styled.div`
-  box-sizing: border-box;
-  margin: 100px 0;
-`;
-
-const BreakImage = styled.img`
-  opacity: 0.1;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin: 0 auto;
-`;
-
-const EmptyMessage = styled.p`
-  color: lightgray;
-  font-weight: 800;
-  text-align: center;
-`;
-
-const TodoForm = styled.form`
-  display: flex;
-
-  input {
-    font-size: 20px;
-    font-weight: 500;
-    border: 2px solid #36f;
-    border-radius: 5px;
-    padding: 8px;
-    margin-right: 10px;
-    flex: 1;
-  }
-
-  button {
-    font-size: 20px;
-    font-weight: 600;
-    width: 70px;
-    cursor: pointer;
-    color: #ffffff;
-    border: 1px solid #36f;
-    border-radius: 5px;
-    background-color: #36f;
-  }
-`;
-
-const TodoList = styled.ul`
-  font-size: 20px;
-  padding: 0;
-  list-style: none;
-
-  label {
-    display: flex;
-    align-items: center;
-    flex: 1;
-    cursor: pointer;
-  }
-
-  button {
-    font-size: 18px;
-    font-weight: 600;
-    width: 50px;
-    padding: 4px 8px;
-    margin: 0 4px;
-    cursor: pointer;
-    border-radius: 100px;
-    border: 1px solid;
-  }
-`;
-
-const ModifyButton = styled.button`
-  color: #36f;
-  background-color: #ffffff;
-  border-color: #36f;
-`;
-
-const DeleteButton = styled.button`
-  color: gray;
-`;
-
-const Checkbox = styled.input`
-  width: 20px;
-  height: 20px;
-  cursor: pointer;
-`;
-
-const TodoItem = styled.div`
-  margin: 10px 0;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-
-  span {
-    padding: 4px;
-    margin: 0 10px;
-    text-decoration: ${(props) =>
-      props.className === "true" ? "line-through" : "none"};
-  }
-`;
-
-const ModifyForm = styled.form`
-  margin: 4px 0;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-
-  label {
-    display: flex;
-    align-items: center;
-    flex: 1;
-    cursor: pointer;
-  }
-`;
-const SubmitButton = styled.button`
-  color: #36f;
-  background-color: #ffffff;
-  border-color: #36f;
-  font-size: 18px;
-`;
-
-const CancelButton = styled.button`
-  color: gray;
-`;
-
-const ModifyInput = styled.input`
-  font-size: 20px;
-  color: #888888;
-  flex: 1;
-  padding: 4px;
-  margin: 0 8px;
-  cursor: revert;
-`;

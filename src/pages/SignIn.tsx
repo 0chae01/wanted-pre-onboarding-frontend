@@ -1,7 +1,7 @@
 import React, { useState } from "react";
-import styled, { css } from "styled-components";
 import { Link, useNavigate } from "react-router-dom";
 import { signIn } from "../apis/auth";
+import * as S from "../styles/Auth.styled";
 
 const SignIn = () => {
   const navigate = useNavigate();
@@ -44,10 +44,10 @@ const SignIn = () => {
   };
 
   return (
-    <Container>
-      <Title>로그인</Title>
-      <SignInForm onSubmit={handleSubmit}>
-        <InputContainer>
+    <S.Container>
+      <S.Title>로그인</S.Title>
+      <S.SignForm onSubmit={handleSubmit}>
+        <S.InputContainer>
           <label>이메일</label>
           <input
             type="email"
@@ -57,10 +57,10 @@ const SignIn = () => {
             placeholder="이메일을 입력해주세요."
           />
           {!isEmailValid && (
-            <ErrorMessage>'@'를 포함한 이메일을 입력해주세요.</ErrorMessage>
+            <S.ErrorMessage>'@'를 포함한 이메일을 입력해주세요.</S.ErrorMessage>
           )}
-        </InputContainer>
-        <InputContainer>
+        </S.InputContainer>
+        <S.InputContainer>
           <label>비밀번호</label>
           <input
             type="password"
@@ -70,106 +70,23 @@ const SignIn = () => {
             placeholder="비밀번호를 입력해주세요."
           />
           {!isPasswordValid && (
-            <ErrorMessage>8자 이상의 비밀번호를 입력해주세요.</ErrorMessage>
+            <S.ErrorMessage>8자 이상의 비밀번호를 입력해주세요.</S.ErrorMessage>
           )}
-        </InputContainer>
-        <SubmitButton
+        </S.InputContainer>
+        <S.SubmitButton
           data-testid="signin-button"
           type="submit"
           disabled={!checkEveryInput()}
         >
           로그인
-        </SubmitButton>
-      </SignInForm>
-      <SignUpButtonArea>
+        </S.SubmitButton>
+      </S.SignForm>
+      <S.InfoArea>
         <p>아직 회원이 아니신가요?</p>
         <Link to="/signup">회원가입</Link>
-      </SignUpButtonArea>
-    </Container>
+      </S.InfoArea>
+    </S.Container>
   );
 };
 
 export default SignIn;
-
-const Container = styled.div`
-  width: 300px;
-  margin: 50px auto;
-`;
-
-const Title = styled.h1`
-  text-align: center;
-`;
-
-const SignInForm = styled.form`
-  width: 300px;
-  margin: auto;
-`;
-
-const InputContainer = styled.div`
-  margin: 20px 0;
-  display: flex;
-  flex-direction: column;
-
-  label {
-    font-size: 16px;
-    color: #888888;
-    font-weight: 600;
-    text-align: start;
-    width: 80px;
-  }
-  input {
-    font-size: 16px;
-    box-sizing: border-box;
-    height: 48px;
-    padding: 0 10px;
-    margin-top: 4px;
-    border: 1px solid #e1e2e3;
-    border-radius: 5px;
-
-    &:focus {
-      border-color: #36f;
-    }
-  }
-`;
-
-const SubmitButton = styled.button`
-  font-size: 16px;
-  font-weight: 600;
-  width: 100%;
-  height: 50px;
-  border: none;
-  border-radius: 25px;
-  margin: 10px 0;
-
-  color: #ffffff;
-  background-color: #36f;
-  cursor: pointer;
-
-  ${(props) =>
-    props.disabled &&
-    css`
-      background-color: #f2f4f7;
-      cursor: default;
-      color: #ccc;
-    `}
-`;
-
-const ErrorMessage = styled.p`
-  font-size: 12px;
-  color: red;
-  margin: 4px 0;
-`;
-
-const SignUpButtonArea = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 10px;
-
-  a {
-    color: #36f;
-  }
-  p {
-    color: gray;
-  }
-`;
