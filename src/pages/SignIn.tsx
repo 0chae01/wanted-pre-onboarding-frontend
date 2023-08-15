@@ -31,11 +31,11 @@ const SignIn = () => {
     try {
       e.preventDefault();
       const result = await signIn(email, password);
-      if (result.statusCode === 200) {
+      if (result.status === 200) {
         alert(result.message);
         navigate("/todo");
       }
-      if (result.statusCode === 401) {
+      if (result.status === 401) {
         alert(result.message);
       }
     } catch (err) {

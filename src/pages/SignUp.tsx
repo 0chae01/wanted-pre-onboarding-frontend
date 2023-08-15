@@ -31,11 +31,11 @@ const SignUp = () => {
     try {
       e.preventDefault();
       const result = await signUp(email, password);
-      if (result.statusCode === 201) {
+      if (result.status === 201) {
         alert(result.message);
         navigate("/signin");
       }
-      if (result.statusCode === 400) {
+      if (result.status === 400) {
         alert(result.message);
       }
     } catch (err) {

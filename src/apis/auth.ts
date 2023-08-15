@@ -14,13 +14,13 @@ export const signUp = async (email: string, password: string) => {
     });
     if (response.status === 201) {
       return {
-        statusCode: 201,
+        status: 201,
         message: "회원가입이 완료되었습니다. 로그인 해주세요.",
       };
     }
     if (response.status === 400) {
       return {
-        statusCode: 400,
+        status: 400,
         message: "이미 존재하는 이메일입니다.",
       };
     }
@@ -48,13 +48,13 @@ export const signIn = async (email: string, password: string) => {
       const data = await response.json();
       localStorage.setItem("token", data.access_token);
       return {
-        statusCode: 200,
+        status: 200,
         message: "환영합니다!",
       };
     }
     if (response.status === 401) {
       return {
-        statusCode: 401,
+        status: 401,
         message: "이메일 또는 비밀번호가 일치하지 않습니다.",
       };
     }
