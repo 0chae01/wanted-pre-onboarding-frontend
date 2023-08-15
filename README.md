@@ -17,9 +17,9 @@ https://wanted-pre-onboarding-frontend-0chae01.vercel.app
 
 ## 데모 영상
 
-### 1. 로그인 / 회원가입
+### :: 1. 로그인 / 회원가입
 
-### 2. TODO LIST
+### :: 2. TODO LIST
 
 ## 과제 목록
 
