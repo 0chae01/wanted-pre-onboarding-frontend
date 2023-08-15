@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { Navigate } from "react-router-dom";
 import styled from "styled-components";
-import API_BASE_URL from "../constants/path";
 import todoItemType from "../types/todoItem";
+import { createTodo, getTodos, updateTodo, deleteTodo } from "../apis/todo";
 
 const Todo = () => {
   const [todoInput, setTodoInput] = useState("");
@@ -12,17 +12,11 @@ const Todo = () => {
 
   const user = localStorage.getItem("token");
 
-  const getTodos = async () => {
+  const fetchTodos = async () => {
     try {
-      const response = await fetch(`${API_BASE_URL}/todos`, {
-        method: "GET",
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem("token")}`,
-        },
-      });
-      const data = await response.json();
-      if (response.status === 200) {
-        setTodoItems(data);
+      const result = await getTodos();
+      if (result.status === 200) {
+        setTodoItems(result.data);
       }
     } catch (err) {
       console.error(err);
@@ -36,26 +30,16 @@ const Todo = () => {
     setTodoInput(e.target.value);
   };
 
-  const createTodo = async (e: React.FormEvent<HTMLFormElement>) => {
+  const handleCreateTodo = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     try {
-      const response = await fetch(`${API_BASE_URL}/todos`, {
-        method: "POST",
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem("token")}`,
-          "Content-type": "application/json",
-        },
-        body: JSON.stringify({
-          todo: todoInput,
-        }),
-      });
-      const data = await response.json();
-      if (response.status === 400) {
-        alert("내용을 입력해주세요.");
-      }
-      if (response.status === 201) {
-        setTodoItems((prev) => [...prev, data]);
+      const result = await createTodo(todoInput);
+      if (result.status === 201) {
+        setTodoItems((prev) => [...prev, result.data]);
         setTodoInput("");
+      }
+      if (result.status === 400) {
+        alert(result.message);
       }
     } catch (err) {
       console.error(err);
@@ -69,29 +53,21 @@ const Todo = () => {
     setModifyInput(e.target.value);
   };
 
-  const updateTodoValue = async (
+  const handleUpdateValue = async (
     e: React.FormEvent<HTMLFormElement>,
-    id: number
+    id: number,
+    todo: string,
+    isCompleted: boolean
   ) => {
     e.preventDefault();
-    const targetItem = todoItems.find((item) => item.id === id);
+
     try {
-      const response = await fetch(`${API_BASE_URL}/todos/${id}`, {
-        method: "PUT",
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem("token")}`,
-          "Content-type": "application/json",
-        },
-        body: JSON.stringify({
-          todo: modifyInput,
-          isCompleted: targetItem?.isCompleted,
-        }),
-      });
-      if (response.status === 200) {
+      const result = await updateTodo(id, todo, isCompleted);
+      if (result.status === 200) {
         setModifyInput("");
         setModifyingItem(-1);
       }
-      if (response.status === 400) {
+      if (result.status === 400) {
         alert("내용을 입력해주세요.");
       }
     } catch (err) {
@@ -99,37 +75,25 @@ const Todo = () => {
     }
   };
 
-  const updateCheckbox = async (id: number) => {
-    const targetItem = todoItems.find((item) => item.id === id);
+  const handleUpdateCheckbox = async (
+    id: number,
+    todo: string,
+    isCompleted: boolean
+  ) => {
     try {
-      const response = await fetch(`${API_BASE_URL}/todos/${id}`, {
-        method: "PUT",
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem("token")}`,
-          "Content-type": "application/json",
-        },
-        body: JSON.stringify({
-          todo: targetItem?.todo,
-          isCompleted: !targetItem?.isCompleted,
-        }),
-      });
-      if (response.status === 200) {
-        getTodos();
+      const result = await updateTodo(id, todo, isCompleted);
+      if (result.status === 200) {
+        fetchTodos();
       }
     } catch (err) {
       console.error(err);
     }
   };
 
-  const deleteTodo = async (id: number) => {
+  const handleDeleteTodo = async (id: number) => {
     try {
-      const response = await fetch(`${API_BASE_URL}/todos/${id}`, {
-        method: "DELETE",
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem("token")}`,
-        },
-      });
-      if (response.status === 204) {
+      const result = await deleteTodo(id);
+      if (result.status === 204) {
         setTodoItems(todoItems.filter((item) => item.id !== id));
       }
     } catch (err) {
@@ -138,7 +102,7 @@ const Todo = () => {
   };
 
   useEffect(() => {
-    getTodos();
+    fetchTodos();
   }, [modifyingItem]);
 
   return (
@@ -146,7 +110,7 @@ const Todo = () => {
       {!user && <Navigate to="/signin" replace={true} />}
       <Title>To Do List</Title>
       <TodoContainer>
-        <TodoForm onSubmit={createTodo}>
+        <TodoForm onSubmit={handleCreateTodo}>
           <input
             data-testid="new-todo-input"
             onChange={handleTodoInput}
@@ -174,14 +138,25 @@ const Todo = () => {
                 {modifyingItem === item.id ? (
                   <ModifyForm
                     onSubmit={(e: React.FormEvent<HTMLFormElement>) =>
-                      updateTodoValue(e, item.id)
+                      handleUpdateValue(
+                        e,
+                        item.id,
+                        modifyInput,
+                        item.isCompleted
+                      )
                     }
                   >
                     <label>
                       <Checkbox
                         type="checkbox"
                         defaultChecked={item.isCompleted}
-                        onChange={() => updateCheckbox(item.id)}
+                        onChange={() =>
+                          handleUpdateCheckbox(
+                            item.id,
+                            item.todo,
+                            !item.isCompleted
+                          )
+                        }
                       />
                       <ModifyInput
                         data-testid="modify-input"
@@ -213,7 +188,13 @@ const Todo = () => {
                       <Checkbox
                         type="checkbox"
                         defaultChecked={item.isCompleted}
-                        onChange={() => updateCheckbox(item.id)}
+                        onChange={() =>
+                          handleUpdateCheckbox(
+                            item.id,
+                            item.todo,
+                            !item.isCompleted
+                          )
+                        }
                       />
                       <span>{item.todo}</span>
                     </label>
@@ -239,7 +220,7 @@ const Todo = () => {
                               `'${item.todo}' 항목을 삭제하시겠습니까?`
                             )
                           ) {
-                            deleteTodo(item.id);
+                            handleDeleteTodo(item.id);
                           }
                         }}
                       >
