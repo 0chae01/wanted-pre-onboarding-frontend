@@ -18,8 +18,10 @@ https://wanted-pre-onboarding-frontend-0chae01.vercel.app
 ## 데모 영상
 
 ### :: 1. 로그인 / 회원가입
+https://github.com/0chae01/wanted-pre-onboarding-frontend/assets/124250465/8d3d621d-a00c-43f3-a6e3-9b348619af65
 
 ### :: 2. TODO LIST
+https://github.com/0chae01/wanted-pre-onboarding-frontend/assets/124250465/a26a484a-1c91-4026-82c4-c15df177b382
 
 ## 과제 목록
 
