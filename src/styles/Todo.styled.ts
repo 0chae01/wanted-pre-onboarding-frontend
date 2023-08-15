@@ -1,12 +1,8 @@
 import styled from "styled-components";
 
-export const Title = styled.h1`
-  text-align: center;
-`;
-
 export const TodoContainer = styled.div`
   width: 400px;
-  margin: auto;
+  margin: 20px auto;
 `;
 
 export const Empty = styled.div`

@@ -107,7 +107,6 @@ const Todo = () => {
   return (
     <>
       {!user && <Navigate to="/signin" replace={true} />}
-      <S.Title>To Do List</S.Title>
       <S.TodoContainer>
         <S.TodoForm onSubmit={handleCreateTodo}>
           <input

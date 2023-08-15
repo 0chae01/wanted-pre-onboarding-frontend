@@ -2,7 +2,7 @@
 
 ## 지원자의 성명
 
-### 김영채
+김영채
 
 ## 프로젝트의 실행 방법
 
@@ -156,7 +156,3 @@ https://wanted-pre-onboarding-frontend-0chae01.vercel.app
     <button data-testid="cancel-button">취소</button>
 
     ```
-
-### 예시
-
-!https://user-images.githubusercontent.com/110355087/214471527-bd8037b9-f2dd-4db0-ade0-3d5ce27a6c0c.gif
