@@ -1,20 +1,25 @@
 # 원티드 프리온보딩 프론트엔드 - 선발 과제
 
-## 지원자의 성명
-
-김영채
+## 지원자의 성명 : `김영채`
 
 ## 프로젝트의 실행 방법
 
 ```
 $ git clone https://github.com/0chae01/wanted-pre-onboarding-frontend.git
+$ cd wanted-pre-onboarding-frontend
 $ npm install
 $ npm start
 ```
 
-## 배포 링크(데모 영상 대체)
+## 배포 링크
 
 https://wanted-pre-onboarding-frontend-0chae01.vercel.app
+
+## 데모 영상
+
+### 1. 로그인 / 회원가입
+
+### 2. TODO LIST
 
 ## 과제 목록
 
@@ -23,22 +28,12 @@ https://wanted-pre-onboarding-frontend-0chae01.vercel.app
 - [x] `/signup` 경로에 회원가입 기능을 개발해주세요
 - [x] `/signin` 경로에 로그인 기능을 개발해주세요
 - [x] 페이지 안에 이메일 input, 비밀번호 input, 제출 button이 포함된 형태로 구성해주세요
-
   - [x] 이메일 input에 `data-testid="email-input"` 속성을 부여해주세요
   - [x] 패스워드 input에 `data-testid="password-input"` 속성을 부여해주세요
   - [x] 회원가입 페이지에는 회원가입 button에 `data-testid="signup-button"` 속성을 부여해주세요
   - [x] 로그인 페이지에는 로그인 button에 `data-testid="signin-button"` 속성을 부여해주세요
-
-  ```
-  <!-- 예시 -->
-  <input data-testid="email-input" />
-  <input data-testid="password-input" />
-  <button data-testid="signup-button">회원가입</button>
-
-  ```
-
-- 두 페이지의 UI는 동일해도 무방합니다.
-- 회원가입과 로그인 페이지의 버튼에 부여되는 test-id가 다른 것에 유의해주세요
+- [x] 두 페이지의 UI는 동일해도 무방합니다.
+- [x] 회원가입과 로그인 페이지의 버튼에 부여되는 test-id가 다른 것에 유의해주세요
 
 ### Assignment 1
 
@@ -76,35 +71,11 @@ https://wanted-pre-onboarding-frontend-0chae01.vercel.app
 - [x] TODO의 완료 여부는 `<input type="checkbox" />`를 통해 표현해주세요
 - [x] TODO는 `<li>` tag를 이용해 감싸주세요
 
-```
-<li>
-  <label>
-    <input type="checkbox" />
-    <span>TODO 1</span>
-  </label>
-</li>
-<li>
-  <label>
-    <input type="checkbox" />
-    <span>TODO 2</span>
-  </label>
-</li>
-
-```
-
 ### Assignment 6
 
 - [x] 리스트 페이지에 새로운 TODO를 입력할 수 있는 input과 추가 button을 만들어주세요
-
   - [x] TODO 입력 input에는 `data-testid="new-todo-input"` 속성을 부여해주세요
   - [x] TODO 추가 button에는 `data-testid="new-todo-add-button"` 속성을 부여해주세요
-
-    ```
-    <input data-testid="new-todo-input" />
-    <button data-testid="new-todo-add-button">추가</button>
-
-    ```
-
 - [x] 추가 button을 클릭하면 입력 input의 내용이 새로운 TODO로 추가되도록 해주세요
 - [x] TODO를 추가 한 뒤 새로고침을 해도 추가한 TODO가 목록에 보여야 합니다.
 
@@ -115,21 +86,8 @@ https://wanted-pre-onboarding-frontend-0chae01.vercel.app
 ### Assignment 8
 
 - [x] TODO 우측에 수정버튼과 삭제 버튼을 만들어주세요
-
   - [x] 수정 버튼에는 `data-testid="modify-button"` 속성을 부여해주세요
   - [x] 삭제 버튼에는 `data-testid="delete-button"` 속성을 부여해주세요
-
-    ```
-    <li>
-      <label>
-        <input type="checkbox" />
-        <span>TODO 1</span>
-      </label>
-      <button data-testid="modify-button">수정</button>
-      <button data-testid="delete-button">삭제</button>
-    </li>
-
-    ```
 
 ### Assignment 9
 
@@ -143,16 +101,9 @@ https://wanted-pre-onboarding-frontend-0chae01.vercel.app
   - [x] TODO 우측의 수정 버튼을 누르면 수정모드가 활성화 되도록 해주세요
   - [x] 수정모드에서는 TODO의 내용을 변경할 수 있어야 합니다.
   - [x] 수정모드에서는 TODO의 내용이 input창 안에 입력된 형태로 변경해주세요
-    - 수정 input창에는 `data-testid="modify-input"` 속성을 부여해주세요
+    - [x] 수정 input창에는 `data-testid="modify-input"` 속성을 부여해주세요
   - [x] 수정모드에서는 TODO의 우측에 제출버튼과 취소버튼이 표시되게 해주세요
-    - 제출버튼에는 `data-testid="submit-button"` 속성을 부여해주세요
-    - 취소버튼에는 `data-testid="cancel-button"` 속성을 부여해주세요
+    - [x] 제출버튼에는 `data-testid="submit-button"` 속성을 부여해주세요
+    - [x] 취소버튼에는 `data-testid="cancel-button"` 속성을 부여해주세요
   - [x] 제출버튼을 누르면 수정한 내용을 제출해서 내용이 업데이트 될 수 있도록 해주세요
   - [x] 취소버튼을 누르면 수정한 내용을 초기화 하고, 수정모드를 비활성화 해주세요
-
-    ```
-    <input data-testid="modify-input" />
-    <button data-testid="submit-button">제출</button>
-    <button data-testid="cancel-button">취소</button>
-
-    ```
