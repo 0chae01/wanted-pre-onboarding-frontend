@@ -102,7 +102,7 @@ export default SignIn;
 
 const Container = styled.div`
   width: 300px;
-  margin: 0 auto;
+  margin: 50px auto;
 `;
 
 const Title = styled.h1`
@@ -177,5 +177,8 @@ const SignUpButtonArea = styled.div`
 
   a {
     color: #36f;
+  }
+  p {
+    color: gray;
   }
 `;
