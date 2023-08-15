@@ -1,7 +1,7 @@
 import styled from "styled-components";
 
 export const TodoContainer = styled.div`
-  width: 400px;
+  width: 480px;
   margin: 20px auto;
 `;
 

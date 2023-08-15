@@ -24,8 +24,8 @@ const Todo = () => {
   };
 
   const handleTodoInput = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (e.target.value.length >= 10) {
-      alert("최대 10자까지 입력할 수 있습니다.");
+    if (e.target.value.length > 15) {
+      alert("최대 15자까지 입력할 수 있습니다.");
     }
     setTodoInput(e.target.value);
   };
@@ -47,8 +47,8 @@ const Todo = () => {
   };
 
   const handleModifyInput = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (e.target.value.length >= 10) {
-      alert("최대 10자까지 입력할 수 있습니다.");
+    if (e.target.value.length > 15) {
+      alert("최대 15자까지 입력할 수 있습니다.");
     }
     setModifyInput(e.target.value);
   };
@@ -113,7 +113,7 @@ const Todo = () => {
             data-testid="new-todo-input"
             onChange={handleTodoInput}
             value={todoInput}
-            maxLength={10}
+            maxLength={15}
           />
           <button data-testid="new-todo-add-button" type="submit">
             추가
@@ -159,7 +159,7 @@ const Todo = () => {
                       <S.ModifyInput
                         data-testid="modify-input"
                         type="text"
-                        maxLength={10}
+                        maxLength={15}
                         width={"100%"}
                         defaultValue={item.todo}
                         name="modifyInput"
