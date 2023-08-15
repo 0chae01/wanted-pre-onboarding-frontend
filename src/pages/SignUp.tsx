@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import styled, { css } from "styled-components";
 import { Link, useNavigate } from "react-router-dom";
-import API_BASE_URL from "../constants/path";
+import { signUp } from "../apis/auth";
 
 const SignUp = () => {
   const navigate = useNavigate();
@@ -30,21 +30,13 @@ const SignUp = () => {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     try {
       e.preventDefault();
-      const response = await fetch(`${API_BASE_URL}/auth/signup`, {
-        method: "POST",
-        headers: { "Content-type": "application/json" },
-        body: JSON.stringify({
-          email: email,
-          password: password,
-        }),
-      });
-      if (response.status === 400) {
-        const data = await response.json();
-        alert(data.message);
-      }
-      if (response.status === 201) {
-        alert(`회원가입이 완료되었습니다. 로그인 해주세요.`);
+      const result = await signUp(email, password);
+      if (result.statusCode === 201) {
+        alert(result.message);
         navigate("/signin");
+      }
+      if (result.statusCode === 400) {
+        alert(result.message);
       }
     } catch (err) {
       console.error(err);

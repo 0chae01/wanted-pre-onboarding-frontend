@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import styled, { css } from "styled-components";
 import { Link, useNavigate } from "react-router-dom";
-import API_BASE_URL from "../constants/path";
+import { signIn } from "../apis/auth";
 
 const SignIn = () => {
   const navigate = useNavigate();
@@ -30,22 +30,13 @@ const SignIn = () => {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     try {
       e.preventDefault();
-      const response = await fetch(`${API_BASE_URL}/auth/signin`, {
-        method: "POST",
-        headers: { "Content-type": "application/json" },
-        body: JSON.stringify({
-          email: email,
-          password: password,
-        }),
-      });
-      const data = await response.json();
-      if (response.status === 401) {
-        alert("이메일 또는 비밀번호가 일치하지 않습니다.");
-      }
-      if (response.status === 200) {
-        localStorage.setItem("token", data.access_token);
-        alert("환영합니다!");
+      const result = await signIn(email, password);
+      if (result.statusCode === 200) {
+        alert(result.message);
         navigate("/todo");
+      }
+      if (result.statusCode === 401) {
+        alert(result.message);
       }
     } catch (err) {
       console.error(err);
